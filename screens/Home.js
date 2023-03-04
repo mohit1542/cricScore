@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
+import {  useEffect, useState } from 'react';
 import { StyleSheet,
   Text,
   View,
   Alert,
   FlatList,
-  ViewPagerAndroidBase,
   TouchableOpacity ,
   RefreshControl,
   Image, ActivityIndicator,
-  Appearance}
+}
 from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import axios from "axios"
 import { Card, Button } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen=()=>{
 
@@ -23,18 +22,8 @@ const HomeScreen=()=>{
   const [LiveMatch, setLiveMatch]= useState()
   const [refresh, setRefresh] = useState(false)
 
-  // if(Loading){
-  //   return(
-  //     <View style={{top:'50%'}}>
-  //       <ActivityIndicator size={60} color='blue' />
-  //     </View>
-  //   )
-  // }
-
-
   const fetchScore =async()=>{
     try { 
-      //setLoading(true)
         await axios({
             method:'GET',
             url : 'https://cricket-live-scores4.p.rapidapi.com/api/matches/current',
@@ -50,7 +39,7 @@ const HomeScreen=()=>{
             return true
         })
         .catch((error)=>{
-          alert('error', error)
+          alert('Server Error\n Try Again After Some Time', error)
         })
         return true
     } catch (error) {
@@ -59,16 +48,13 @@ const HomeScreen=()=>{
     }
     finally{
       setRefresh(false)
-      //setLoading(false)
     }
 }
-
 
 const onRefresh=()=>{
   setRefresh(true);
   fetchScore();
 }
-
 
   useEffect(()=>{
     fetchScore()
@@ -92,10 +78,12 @@ const onRefresh=()=>{
     return(
       <View style= {{flex:1}}>
 
-        <View style={styles.button}>
-          <Button mode='elevated' onPress={()=>navigation.navigate('Upcoming')}>Upcoming</Button>
-        </View>
+      {/* <ImageBackground source={require('../assets/images/ground3.webp')}> */}
 
+        <View style={styles.button}>
+          <Button mode='elevated' width={'40%'} onPress={()=>navigation.navigate('Upcoming')}>Completed</Button>
+        </View>
+        
         <FlatList
                 data={LiveMatch}
                 refreshing={refresh}
@@ -109,7 +97,7 @@ const onRefresh=()=>{
                         {item.state == "LIVE" ? (
                           <View style={styles.flatlistItem}>
 
-                              <View style={{flexDirection:'row', flex:0.8}}>
+                              <View style={{flexDirection:'row', flex:0.85}}>
 
                                   <View style={{flex:0.35}}>
                                       <Text style={styles.flatText}>{item.teams[0].team.name}</Text>
@@ -127,16 +115,20 @@ const onRefresh=()=>{
                                   </View>
                               </View>
 
-                              <View style={{flex:0.2, alignItems:'center'}}>
+                              <View style={{flex:0.15, alignItems:'center'}}>
                                   <Text style={styles.cardtext4}>{item.statusText}</Text>
                               </View>
 
                           </View>
-                          ):""}
+                          ): (
+                            ""
+                          )}
                   </TouchableOpacity>
 
                 )}
-        />
+      />
+
+      {/* </ImageBackground> */}
       </View>
     )
 }
@@ -162,10 +154,9 @@ const onRefresh=()=>{
   
   },
   button:{
-    flexL:0.2, 
-    flexDirection:'row', 
+    flexL:0.2,
     marginVertical:10, 
-    justifyContent:'space-evenly'
+    alignItems:'center'
   },
   flatText:{
     //flex:0.40,

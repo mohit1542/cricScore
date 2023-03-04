@@ -16,7 +16,7 @@ const Main =()=>{
             <Stack.Screen
             name='Home'
             component={HomeScreen}
-            options={{ headerTitleAlign:'center', headerTitle:'Live Score'}}
+            options={{ headerTitleAlign:'center', headerTitle:'Live Score', headerTintColor:'blue'}}
             />
 
             <Stack.Screen

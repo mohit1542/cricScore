@@ -7,11 +7,9 @@ const DetailScreen=({navigation, route})=>{
 
   return(
     <View style={styles.container}>
-
             <View style={styles.heading} marginTop='5%'>
-              <Image style={{width:30, height:25}} source={require('../assets/images/ball.png')}/>
               <Text style={styles.cardtex1}>INFO</Text>
-              {/* <Image style={{height:300, width:300}} source={{uri: `https://rapidapi.com/manojkumarch2020/api/cricket-live-scores4${items.teams[1].team.image.url}`}} /> */}
+              <Image style={{width:30, height:25}} source={require('../assets/images/ball.png')}/>
             </View>
 
             <View style={{flex:0.3, flexDirection:'column'}}>
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
   info:{
     fontSize:15,
     paddingLeft:'5%',
-    marginTop:'3%',
+    marginTop:'2%',
     color:'#808080'
   }
 

@@ -8,6 +8,7 @@ import { StyleSheet,
   ViewPagerAndroidBase,
   TouchableOpacity ,
   RefreshControl,
+  ImageBackground,
   Image}
 from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -72,6 +73,7 @@ const fetchScore =async()=>{
 
     return(
       <View style= {{flex:1}}>
+        <ImageBackground source={require('../assets/images/ground3.webp')}>
         <FlatList
                 data={UpcomingMatch}
                 refreshing={refresh}
@@ -93,6 +95,7 @@ const fetchScore =async()=>{
 
                 )}
         />
+        </ImageBackground>
       </View>
     )
   }
